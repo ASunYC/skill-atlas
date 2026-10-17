@@ -1,0 +1,6 @@
+{
+  "name": "skill-atlas", "version": "1.0.0", "private": true, "type": "module",
+  "description": "A self-hosted discovery radar for agent skills, DSH plugins and AI applications",
+  "engines": { "node": ">=22.21" },
+  "scripts": { "start": "node server.mjs", "collect": "node scripts/collect.mjs", "test": "node --test", "check": "node --check server.mjs && node --check lib/collector.mjs && node --check public/app.js" }
+}

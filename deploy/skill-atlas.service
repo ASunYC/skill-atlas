@@ -1,0 +1,27 @@
+[Unit]
+Description=Skill Atlas discovery radar
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=skill-atlas
+Group=skill-atlas
+WorkingDirectory=/opt/skill-atlas
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=3210
+EnvironmentFile=-/etc/skill-atlas.env
+ExecStart=/usr/bin/node --use-env-proxy /opt/skill-atlas/server.mjs
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/skill-atlas/data
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target
