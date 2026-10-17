@@ -13,7 +13,7 @@ async function refresh() { if (collecting) return; collecting = true; try { cata
 async function refreshProbes() { if(probing) return; probing = true; try { probes = await probe(); } catch(e) { console.error('Probe:', e.message); } finally { probing = false; } }
 const cleanup = () => { const now = Date.now(); for (const [id, s] of sessions) if (now-s.last > 90000) sessions.delete(id); for (const [ip, r] of rate) if(now-r.start>60000) rate.delete(ip); };
 const json = (res, code, data) => { res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(data)); };
-const staticFiles = new Map([['/', 'index.html'], ['/app.js', 'app.js'], ['/style.css', 'style.css'], ['/favicon.svg', 'favicon.svg']]);
+const staticFiles = new Map([['/', 'index.html'], ['/explore', 'index.html'], ['/app.js', 'app.js'], ['/style.css', 'style.css'], ['/favicon.svg', 'favicon.svg']]);
 const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');

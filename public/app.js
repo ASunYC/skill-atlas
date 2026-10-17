@@ -10,7 +10,20 @@ const validUrl = url => { try { const u=new URL(url); return u.protocol==='https
 const daysAgo = date => date ? Math.max(0,Math.floor((Date.now()-Date.parse(date))/86400000)) : null;
 function notify(message){$('#toast').textContent=message;$('#toast').hidden=false;setTimeout(()=>$('#toast').hidden=true,2400);}
 function count(){for(const key of Object.keys(labels)){const n=key==='saved'?saved.size:key==='all'?catalog.items.length:catalog.items.filter(i=>i.category===key).length;$$(`[data-count="${key}"]`).forEach(el=>el.textContent=number(n));}$('#stat-total').textContent=number(catalog.items.length);$('#stat-skills').textContent=number(catalog.items.filter(i=>i.category==='skills').length);$('#stat-hf').textContent=number(catalog.items.filter(i=>['models','spaces'].includes(i.category)).length);const verified=catalog.items.filter(i=>i.verified).length;$('#skill-note').textContent=`其中 ${verified} 项含技能清单`;}
-function selectCategory(value){category=value;limit=12;$$('[data-category]').forEach(el=>{el.classList.toggle('active',el.classList.contains('nav-item')&&el.dataset.category===value);el.classList.toggle('selected',!el.classList.contains('nav-item')&&el.dataset.category===value);});$('#breadcrumb').textContent=labels[value];$('#section-title').textContent=value==='all'?'发现，正在发生.':labels[value];render();}
+function closeMenu(){document.body.classList.remove('nav-open');$('#menu-toggle').setAttribute('aria-expanded','false');}
+function route(push=false, target=location.pathname+location.search){
+ const url=new URL(target,location.origin),exploring=url.pathname==='/explore';
+ const requested=url.searchParams.get('category')||'all';category=Object.hasOwn(labels,requested)?requested:'all';limit=12;
+ if(push)history.pushState({},'',exploring?`/explore${category==='all'?'':'?category='+category}`:'/');
+ document.body.dataset.view=exploring?'explore':'home';closeMenu();
+ $('#home-nav').classList.toggle('active',!exploring);
+ $$('[data-category]').forEach(el=>el.classList.toggle('active',exploring&&el.dataset.category===category));
+ $('#breadcrumb').textContent=exploring?labels[category]:'概览';$('#section-title').textContent=category==='all'?'发现，正在发生.':labels[category];
+ document.title=exploring?`${labels[category]} · Skill Atlas`:'Skill Atlas · 发现值得用的 AI';
+ $('link[rel="canonical"]').href=exploring?'https://ai.freeman.fit/explore':'https://ai.freeman.fit/';render();
+ if(push)window.scrollTo({top:0,behavior:'instant'});
+}
+function selectCategory(value){route(true,`/explore${value==='all'?'':'?category='+value}`);}
 function filtered(){const query=$('#search').value.trim().toLowerCase();const list=catalog.items.filter(i=>(category==='all'||(category==='saved'?saved.has(i.id):i.category===category))&&(!activeOnly||(daysAgo(i.pushedAt)!==null&&daysAgo(i.pushedAt)<=30))&&(!query||[i.name,i.owner,i.description,...i.tags||[]].join(' ').toLowerCase().includes(query)));
  const sort=$('#sort').value;
  if(sort==='name')return list.sort((a,b)=>a.name.localeCompare(b.name));
@@ -34,8 +47,12 @@ async function loadProbes(){try{const r=await fetch('./api/probes');if(!r.ok)ret
 let visitor;try{visitor=localStorage.getItem('skill-atlas:visitor');if(!visitor){visitor=crypto.randomUUID?crypto.randomUUID():Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,'0')).join('');localStorage.setItem('skill-atlas:visitor',visitor);}}catch{visitor='temporary-'+Math.random().toString(36).slice(2)+Date.now();}
 async function heartbeat(){if(document.hidden)return;try{const r=await fetch('./api/presence',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:visitor})});if(!r.ok)return;const d=await r.json();$('#online').textContent=d.online;$('#stat-visits').textContent=number(d.today);}catch{}}
 $$('[data-category]').forEach(el=>el.addEventListener('click',()=>selectCategory(el.dataset.category)));
+$('.hero-button').href='/explore';$('.hero-button').addEventListener('click',e=>{e.preventDefault();selectCategory('all');});
+for(const el of [$('.brand'),$('#home-nav'),$('#home-link')])el.addEventListener('click',e=>{e.preventDefault();route(true,'/');});
+$('#menu-toggle').addEventListener('click',()=>{const open=document.body.classList.toggle('nav-open');$('#menu-toggle').setAttribute('aria-expanded',String(open));});
+window.addEventListener('popstate',()=>route());
 $('#cards').addEventListener('click',e=>{const save=e.target.closest('[data-save]');if(save){const id=save.dataset.save;saved.has(id)?saved.delete(id):saved.add(id);try{localStorage.setItem('skill-atlas:saved',JSON.stringify([...saved]));}catch{notify('当前浏览器无法保存收藏，收藏仅本次有效');}count();render();return;}const card=e.target.closest('[data-id]');if(card)details(card.dataset.id);});
 $('#cards').addEventListener('keydown',e=>{if(e.target.matches('[data-id]')&&['Enter',' '].includes(e.key)){e.preventDefault();details(e.target.dataset.id);}});
 $('#search').addEventListener('input',()=>{limit=12;render();});$('#sort').addEventListener('change',render);$('#active-only').addEventListener('click',()=>{activeOnly=!activeOnly;$('#active-only').setAttribute('aria-pressed',String(activeOnly));render();});$('#load-more').addEventListener('click',()=>{limit+=12;render();});$('#refresh').addEventListener('click',()=>{load();loadProbes();heartbeat();});$('#methodology').addEventListener('click',methodology);$('#ranking-info').addEventListener('click',methodology);$('#sources-button').addEventListener('click',sources);$('#close-dialog').addEventListener('click',()=>$('#detail').close());$('#detail').addEventListener('click',e=>{if(e.target===$('#detail')){const r=$('#detail').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('#detail').close();}});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!$('#detail').open){e.preventDefault();$('#search').focus();}});document.addEventListener('visibilitychange',heartbeat);
-load();loadProbes();heartbeat();setInterval(heartbeat,30000);setInterval(loadProbes,300000);setInterval(load,600000);
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)&&!$('#detail').open){e.preventDefault();if(document.body.dataset.view==='home')selectCategory('all');$('#search').focus();}if(e.key==='Escape')closeMenu();});document.addEventListener('visibilitychange',heartbeat);
+route();load();loadProbes();heartbeat();setInterval(heartbeat,30000);setInterval(loadProbes,300000);setInterval(load,600000);

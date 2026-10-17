@@ -4,6 +4,8 @@
 
 正式地址：[https://ai.freeman.fit/](https://ai.freeman.fit/)。域名解析到自有服务器，Nginx 使用已有的 `*.freeman.fit` 泛域名证书；HTTP 和旧 IP 入口跳转到正式 HTTPS 地址。
 
+首页 `/` 展示欢迎卡片与生态概览；点击探索或侧栏分类进入 `/explore`。分类链接使用 `?category=skills` 等参数，支持直接访问、刷新和浏览器前进后退。探索页只保留左侧分类导航，手机端通过菜单按钮展开同一套导航。
+
 ## 本地运行
 
 Node.js 22.21+，无第三方运行依赖。
