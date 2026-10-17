@@ -2,6 +2,8 @@
 
 自托管的 AI 资源发现站：Agent Skills、DSH 候选插件、Hugging Face 模型 / Spaces 热榜与开源 AI 应用。中文界面、搜索 / 分类 / 收藏、维护活跃度、真实浏览器在线心跳、站点探测与数据来源说明。
 
+正式地址：[https://ai.freeman.fit/](https://ai.freeman.fit/)。域名解析到自有服务器，Nginx 使用已有的 `*.freeman.fit` 泛域名证书；HTTP 和旧 IP 入口跳转到正式 HTTPS 地址。
+
 ## 本地运行
 
 Node.js 22.21+，无第三方运行依赖。
@@ -43,7 +45,7 @@ curl http://127.0.0.1:3210/api/health
 
 部署前检查配置文件名、3210 端口和服务名是否冲突。维护时先 `npm run check && npm test`，上传新代码后 `systemctl restart skill-atlas`，验证 API 后再切换 Nginx；回退时恢复前一版代码并重启服务，保留 `data/`。
 
-有域名后配置 DNS、HTTPS 证书并修改 server_name。当前支持 IP 的 HTTP 访问；正式域名与证书需要 DNS 控制权。浏览器支持普通 HTTP 的随机标识降级。
+当前 Nginx 配置绑定 `ai.freeman.fit`，复用服务器 `/etc/nginx/cert/freeman.pem` 和 `/etc/nginx/cert/freeman.key`，证书与私钥不存入仓库。部署到其他服务器时需调整域名、DNS 和证书路径；证书续期沿用服务器现有维护流程。
 
 ## 设计
 
