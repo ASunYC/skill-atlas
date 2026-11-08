@@ -1,4 +1,4 @@
-# Skill Atlas · 智能应用雷达
+# 探用 AI · 工具发现与行业方案
 
 自托管的 AI 资源发现站：Agent Skills、DSH 候选插件、Hugging Face 模型 / Spaces 热榜与开源 AI 应用。中文界面、搜索 / 分类 / 收藏、维护活跃度、真实浏览器在线心跳、站点探测与数据来源说明。
 

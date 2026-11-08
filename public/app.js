@@ -37,7 +37,7 @@ function route(push=false, target=location.pathname+location.search){
  $('#home-nav').classList.toggle('active',view==='home');
  $$('[data-category]').forEach(el=>el.classList.toggle('active',exploring&&el.dataset.category===category));
  $('#breadcrumb').textContent=title;$('#section-title').textContent=category==='all'?'发现，正在发生.':labels[category];
- document.title=view!=='home'?`${title} · Skill Atlas`:'Skill Atlas · 发现值得用的 AI';
+ document.title=view!=='home'?`${title} · 探用 AI`:'探用 AI · 工具发现与行业方案';
  $('link[rel="canonical"]').href=new URL(url.pathname,'https://ai.freeman.fit').href;render();
  if(push)window.scrollTo({top:0,behavior:'instant'});
 }
