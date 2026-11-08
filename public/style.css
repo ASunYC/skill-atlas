@@ -132,16 +132,16 @@ body[data-view="solutions"] .solutions-showcase { margin-top: 0; }
 .hero-carousel .hero { min-height: 360px; }
 .hero-carousel .hero-copy { padding-bottom: 64px; }
 .hero-carousel .hero:not([hidden]) .hero-copy,
-.hero-carousel .hero:not([hidden]) .ad-art { animation: hero-slide-in .38s ease-out both; }
+.hero-carousel .hero:not([hidden]) .feature-visual { animation: hero-slide-in .38s ease-out both; }
 @keyframes hero-slide-in {
   from { opacity: 0; transform: translateX(18px); }
   to { opacity: 1; transform: translateX(0); }
 }
-.hero.hero-ad { background: var(--product-wash); border-color: var(--product-line); }
-.hero-ad h1, .hero-ad .eyebrow { color: var(--product-ink); }
-.hero-ad p { color: #465d52; font-size: 13px; }
-.hero-ad .hero-button { background: var(--product-ink); font-size: 13px; }
-.ad-art {
+.hero.feature-slide { background: var(--product-wash); border-color: var(--product-line); }
+.feature-slide h1, .feature-slide .eyebrow { color: var(--product-ink); }
+.feature-slide p { color: #465d52; font-size: 13px; }
+.feature-slide .hero-button { background: var(--product-ink); font-size: 13px; }
+.feature-visual {
   width: 52%;
   display: grid;
   place-items: center;
@@ -149,7 +149,7 @@ body[data-view="solutions"] .solutions-showcase { margin-top: 0; }
   min-width: 0;
   background: radial-gradient(var(--product-line) 1px, transparent 1px) 0 0 / 13px 13px;
 }
-.ad-art img, .ad-window {
+.feature-visual img, .feature-workbench {
   display: block;
   width: min(100%, 490px);
   height: auto;
@@ -158,10 +158,10 @@ body[data-view="solutions"] .solutions-showcase { margin-top: 0; }
   box-shadow: 0 12px 32px #1b383020;
   background: white;
 }
-.ad-art img { width: auto; max-width: 100%; max-height: 270px; }
-.ad-window { color: var(--product-ink); font-size: 12px; overflow: hidden; }
-.ad-window-bar { display: flex; justify-content: space-between; padding: 13px 15px; border-bottom: 1px solid var(--product-line); }
-.ad-window-content { display: grid; gap: 12px; padding: 20px 15px; background: #fbfcfd; }
+.feature-visual img { width: auto; max-width: 100%; max-height: 270px; }
+.feature-workbench { color: var(--product-ink); font-size: 12px; overflow: hidden; }
+.feature-workbench-bar { display: flex; justify-content: space-between; padding: 13px 15px; border-bottom: 1px solid var(--product-line); }
+.feature-workbench-content { display: grid; gap: 12px; padding: 20px 15px; background: #fbfcfd; }
 .carousel-controls {
   position: absolute;
   bottom: 12px;
@@ -191,19 +191,19 @@ body[data-view="solutions"] .solutions-showcase { margin-top: 0; }
 .carousel-controls button:focus-visible { outline: 2px solid #315f45; outline-offset: 2px; }
 @media(max-width: 740px) {
   .hero-carousel .hero { min-height: 475px; }
-  .hero-carousel .hero-ad { display: grid; align-content: start; }
-  .hero-carousel .hero-ad .hero-copy { padding: 19px 19px 12px; }
-  .hero-ad h1 { margin: 11px 0; }
-  .hero-ad p { margin-bottom: 12px; font-size: 12px; max-width: none; }
-  .ad-art { width: 100%; padding: 0 19px 58px; background: none; }
-  .ad-art img { width: auto; max-width: 100%; max-height: 155px; }
-  .ad-window-bar { padding: 7px 10px; }
-  .ad-window-content { gap: 6px; padding: 8px 10px; }
-  .ad-window .preview-tasks span, .ad-window .preview-compose { padding: 3px 5px; }
+  .hero-carousel .feature-slide { display: grid; align-content: start; }
+  .hero-carousel .feature-slide .hero-copy { padding: 19px 19px 12px; }
+  .feature-slide h1 { margin: 11px 0; }
+  .feature-slide p { margin-bottom: 12px; font-size: 12px; max-width: none; }
+  .feature-visual { width: 100%; padding: 0 19px 58px; background: none; }
+  .feature-visual img { width: auto; max-width: 100%; max-height: 155px; }
+  .feature-workbench-bar { padding: 7px 10px; }
+  .feature-workbench-content { gap: 6px; padding: 8px 10px; }
+  .feature-workbench .preview-tasks span, .feature-workbench .preview-compose { padding: 3px 5px; }
 }
 @media(prefers-reduced-motion: reduce) {
   .hero-carousel .hero:not([hidden]) .hero-copy,
-  .hero-carousel .hero:not([hidden]) .ad-art { animation: none; }
+  .hero-carousel .hero:not([hidden]) .feature-visual { animation: none; }
 }
 
 .brand { letter-spacing: .15px; }

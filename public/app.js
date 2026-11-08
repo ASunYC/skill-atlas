@@ -82,7 +82,7 @@ function initCarousel() {
  let current=0, timer, playing=!reducedMotion.matches;
  function schedule() {
   clearTimeout(timer);
-  if(playing&&!document.hidden&&document.body.dataset.view==='home'&&!slides[current].matches(':focus-within')) {
+  if(playing&&!document.hidden&&document.body.dataset.view==='home'&&!carousel.matches(':hover, :focus-within')) {
    timer=setTimeout(()=>show(current+1),6000);
   }
  }
@@ -104,7 +104,7 @@ function initCarousel() {
  rotation.addEventListener('click',()=>setPlaying(!playing));
  carousel.querySelectorAll('[data-step]').forEach(button=>button.addEventListener('click',()=>show(current+Number(button.dataset.step))));
  selectors.forEach(button=>button.addEventListener('click',()=>show(Number(button.dataset.slideIndex))));
- for(const event of ['focusin','focusout']) {
+ for(const event of ['pointerenter','pointerleave','focusin','focusout']) {
   carousel.addEventListener(event,()=>queueMicrotask(schedule));
  }
  reducedMotion.addEventListener('change',event=>setPlaying(!event.matches));
