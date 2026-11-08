@@ -13,7 +13,7 @@ async function refresh() { if (collecting) return; collecting = true; try { cata
 async function refreshProbes() { if(probing) return; probing = true; try { probes = await probe(); } catch(e) { console.error('Probe:', e.message); } finally { probing = false; } }
 const cleanup = () => { const now = Date.now(); for (const [id, s] of sessions) if (now-s.last > 90000) sessions.delete(id); for (const [ip, r] of rate) if(now-r.start>60000) rate.delete(ip); };
 const json = (res, code, data) => { res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(data)); };
-const staticFiles = new Map([['/', 'index.html'], ['/explore', 'index.html'], ['/app.js', 'app.js'], ['/style.css', 'style.css'], ['/favicon.svg', 'favicon.svg']]);
+const staticFiles = new Map([['/', 'index.html'], ['/explore', 'index.html'], ['/solutions', 'index.html'], ['/solutions/ae-working', 'index.html'], ['/solutions/ae-hospital', 'index.html'], ['/ae-hospital-workbench.png', 'ae-hospital-workbench.png'], ['/app.js', 'app.js'], ['/style.css', 'style.css'], ['/favicon.svg', 'favicon.svg']]);
 const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -46,7 +46,7 @@ const server = http.createServer(async (req, res) => {
     if(req.method!=='GET' && req.method!=='HEAD') return json(res,405,{error:'Method not allowed'});
     const file=staticFiles.get(url.pathname); if(!file) return json(res,404,{error:'Not found'});
     const content=await readFile(resolve('public',file));
-    res.writeHead(200,{'Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml'})[extname(file)],'Cache-Control':'no-cache'}); res.end(req.method==='HEAD'?undefined:content);
+    res.writeHead(200,{'Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.png':'image/png'})[extname(file)],'Cache-Control':'no-cache'}); res.end(req.method==='HEAD'?undefined:content);
   } catch(e) { console.error(e.message); if(!res.headersSent) json(res,500,{error:'Internal error'}); else res.end(); }
 });
 server.listen(port,host,()=>console.log(`Skill Atlas: http://${host}:${port}`));

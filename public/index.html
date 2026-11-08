@@ -5,11 +5,11 @@
   <title>Skill Atlas · 发现值得用的 AI</title>
   <link rel="canonical" href="https://ai.freeman.fit/">
   <meta name="description" content="持续追踪 Agent Skills、DSH 插件、Hugging Face 热榜与开源 AI 应用。可追溯的数据、真实活跃度与可用性监测。">
-  <meta name="theme-color" content="#f5f6f0"><link rel="icon" href="./favicon.svg"><link rel="stylesheet" href="./style.css"><script src="./app.js" defer></script>
+  <meta name="theme-color" content="#f5f6f0"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
 </head>
 <body data-view="home">
 <aside class="sidebar" id="main-sidebar">
-  <a class="brand" href="./" aria-label="Skill Atlas 首页"><img src="./favicon.svg" alt="" width="36" height="36"><span>Skill Atlas<small>智能应用雷达</small></span></a>
+  <a class="brand" href="/" aria-label="Skill Atlas 首页"><img src="/favicon.svg" alt="" width="36" height="36"><span>Skill Atlas<small>智能应用雷达</small></span></a>
   <div class="nav-label">EXPLORE / 发现</div>
   <nav id="side-nav" aria-label="分类导航">
     <button class="nav-item active" id="home-nav"><span class="nav-icon">⌂</span>首页</button>
@@ -19,6 +19,7 @@
     <button class="nav-item" data-category="models"><span class="nav-icon">◉</span>HF 模型热榜<span class="nav-count" data-count="models">—</span></button>
     <button class="nav-item" data-category="spaces"><span class="nav-icon">▧</span>HF Spaces<span class="nav-count" data-count="spaces">—</span></button>
     <button class="nav-item" data-category="apps"><span class="nav-icon">▦</span>AI 应用<span class="nav-count" data-count="apps">—</span></button>
+    <a class="nav-item" id="solutions-nav" href="/solutions"><span class="nav-icon" aria-hidden="true">◇</span>行业解决方案</a>
   </nav>
   <div class="nav-divider"></div><div class="nav-label">WORKSPACE / 我的空间</div>
   <button class="nav-item" id="saved-nav" data-category="saved"><span class="nav-icon">♡</span>我的收藏<span class="nav-count" data-count="saved">0</span></button>
@@ -33,6 +34,91 @@
       <div class="hero-copy"><div class="eyebrow"><span class="tiny-cross">✳</span> YOUR SIGNAL IN THE AI NOISE</div><h1>下一个好用的 AI，<br>从这里<span class="serif">发现。</span></h1><p>从一项技能，到一个真正解决问题的应用。<br>追踪开源生态的每一次生长，把时间留给值得探索的事。</p><a href="#explore" class="hero-button">探索 AI 生态 <span>↗</span></a><span class="hero-note">公开数据 · 持续更新 · 无需登录</span></div>
       <div class="radar-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="radar-axis x-axis"></div><div class="radar-axis y-axis"></div><div class="radar-core">✳</div><div class="orbit-label label-skills">⌘ <span>Agent Skills</span><i></i></div><div class="orbit-label label-models">◉ <span>Open Models</span><i></i></div><div class="orbit-label label-apps">▦ <span>AI Applications</span><i></i></div><div class="orbit-label label-plugins">⬡ <span>Plugins</span><i></i></div><span class="art-coordinate">DISCOVERY SYSTEM / 01</span><span class="art-plus plus-one">+</span><span class="art-plus plus-two">+</span></div>
     </section>
+    <section class="solutions-showcase" id="solutions-showcase" aria-labelledby="solutions-heading">
+      <div class="solutions-intro">
+        <div>
+          <div class="eyebrow">AGENT-ENTERPRISE / AI 智能化</div>
+          <h2 id="solutions-heading">行业解决方案</h2>
+          <h1 id="solutions-title" hidden>行业解决方案</h1>
+          <p>从通用办公到医院场景，看看 AI 工作台如何融入日常工作。</p>
+        </div>
+        <a class="solutions-link" id="solutions-all" href="/solutions">查看全部方案 <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="solution-grid">
+        <a class="solution-card working" href="/solutions/ae-working">
+          <span class="solution-mark" aria-hidden="true">▤</span>
+          <div><span class="solution-name">AE-Working</span><h3>通用办公</h3><p>公文起草、会议纪要、表格分析与工作汇报。</p></div>
+          <span class="solution-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="solution-card hospital" href="/solutions/ae-hospital">
+          <span class="solution-mark" aria-hidden="true">✚</span>
+          <div><span class="solution-name">AE-Hospital</span><h3>医院智能工作台</h3><p>面向医院团队的 AI 对话、知识查阅与协作。</p></div>
+          <span class="solution-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="product-page working" id="ae-working" aria-labelledby="working-title" hidden>
+      <div class="product-banner">
+        <div class="product-copy">
+          <a class="solutions-link" href="/solutions">← 行业解决方案</a>
+          <div class="eyebrow">AGENT-ENTERPRISE / AE-WORKING</div>
+          <h1 id="working-title">让日常办公<br>从一份草稿开始</h1>
+          <p>面向政企员工的 AI 工作台。在新会话中选择办公任务，填入草稿，再按需要修改和发送。</p>
+          <a class="product-button" href="#working-scenarios">查看办公场景 ↓</a>
+        </div>
+        <figure class="product-preview">
+          <div class="working-preview" role="img" aria-label="AE-Working 白底办公界面示意，包含新建会话和四项办公任务">
+            <div class="preview-toolbar"><b>AE-Working</b><span>新建会话</span></div>
+            <div class="preview-body">
+              <div class="preview-sidebar"><strong>＋ 新建会话</strong><span>工作区</span><span>知识库</span></div>
+              <div class="preview-workspace">
+                <strong>今天要处理哪项工作？</strong>
+                <div class="preview-tasks"><span>公文起草</span><span>会议纪要</span><span>表格分析</span><span>工作汇报</span></div>
+                <div class="preview-compose">输入要求，开始撰写… <span>↑</span></div>
+              </div>
+            </div>
+          </div>
+          <figcaption>办公工作台界面示意</figcaption>
+        </figure>
+      </div>
+      <section class="product-scenarios" id="working-scenarios" aria-labelledby="working-scenarios-title">
+        <h2 id="working-scenarios-title">四类日常办公任务</h2>
+        <div class="scenario-grid">
+          <article><h3>公文起草</h3><p>根据主题、受众和要点，整理出可继续编辑的初稿。</p></article>
+          <article><h3>会议纪要</h3><p>把会议记录整理成议题、决定和待办事项。</p></article>
+          <article><h3>表格分析</h3><p>围绕表格数据提出问题，梳理需要核对的结果。</p></article>
+          <article><h3>工作汇报</h3><p>按进展、成果和下一步计划组织汇报材料。</p></article>
+        </div>
+      </section>
+      <a class="solutions-link product-related" href="/solutions/ae-hospital">查看 AE-Hospital 医院智能工作台 ↗</a>
+    </section>
+
+    <section class="product-page hospital" id="ae-hospital" aria-labelledby="hospital-title" hidden>
+      <div class="product-banner">
+        <div class="product-copy">
+          <a class="solutions-link" href="/solutions">← 行业解决方案</a>
+          <div class="eyebrow">AGENT-ENTERPRISE / AE-HOSPITAL</div>
+          <h1 id="hospital-title">面向医院团队的<br>智能工作台</h1>
+          <p>从新建会话进入工作区，按任务使用组织架构、专家、技能和知识库，协助日常资料整理与团队协作。</p>
+          <a class="product-button" href="#hospital-scenarios">查看工作台场景 ↓</a>
+        </div>
+        <figure class="product-preview">
+          <img src="/ae-hospital-workbench.png" alt="AE-Hospital 青绿色工作台预览，左侧为组织架构和专家入口，中央为新建会话" width="1440" height="900" loading="lazy">
+          <figcaption>医院主题静态预览 · 无业务数据</figcaption>
+        </figure>
+      </div>
+      <section class="product-scenarios" id="hospital-scenarios" aria-labelledby="hospital-scenarios-title">
+        <h2 id="hospital-scenarios-title">从日常协作开始</h2>
+        <div class="scenario-grid">
+          <article><h3>组织与专家</h3><p>从工作台访问组织架构和专家入口，按任务选择资源。</p></article>
+          <article><h3>知识与资料</h3><p>在知识库中查阅资料，围绕内部流程和材料开展问答。</p></article>
+          <article><h3>会话与工具</h3><p>在会话中调用技能与连接器，协助整理信息和撰写材料。</p></article>
+        </div>
+      </section>
+      <a class="solutions-link product-related" href="/solutions/ae-working">查看 AE-Working 通用办公 ↗</a>
+    </section>
+
     <section class="stats" aria-label="生态数据统计">
       <div class="stat"><span>已收录条目 <i>↗</i></span><strong id="stat-total">—</strong><small>公开仓库与独立资源</small></div>
       <div class="stat"><span>Agent Skills <i>⌘</i></span><strong id="stat-skills">—</strong><small id="skill-note">技能清单与候选仓库</small></div>
