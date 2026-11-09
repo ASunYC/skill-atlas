@@ -76,22 +76,30 @@ document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].in
 function initCarousel() {
  const carousel=$('#hero-carousel');
  const slides=[...carousel.querySelectorAll('[data-slide]')];
+ const selectors=[...carousel.querySelectorAll('[data-slide-index]')];
  let current=0, timer;
  function schedule() {
   clearTimeout(timer);
   if(!document.hidden&&document.body.dataset.view==='home'&&!carousel.matches(':hover, :focus-within')) {
-   timer=setTimeout(()=>{
-    slides[current].hidden=true;
-    current=(current+1)%slides.length;
-    slides[current].hidden=false;
-    schedule();
-   },6000);
+   timer=setTimeout(()=>show(current+1),6000);
   }
  }
+ function show(index) {
+  current=(index+slides.length)%slides.length;
+  slides.forEach((slide,i)=>slide.hidden=i!==current);
+  selectors.forEach((button,i)=>{
+   if(i===current)button.setAttribute('aria-current','true');
+   else button.removeAttribute('aria-current');
+  });
+  schedule();
+ }
+ carousel.querySelectorAll('[data-step]').forEach(button=>button.addEventListener('click',()=>show(current+Number(button.dataset.step))));
+ selectors.forEach(button=>button.addEventListener('click',()=>show(Number(button.dataset.slideIndex))));
  for(const event of ['pointerenter','pointerleave','focusin','focusout']) {
   carousel.addEventListener(event,()=>queueMicrotask(schedule));
  }
  document.addEventListener('visibilitychange',schedule);
+ carousel.querySelector('.carousel-controls').hidden=false;
  return schedule;
 }
 const scheduleCarousel=initCarousel();
