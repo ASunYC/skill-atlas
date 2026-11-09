@@ -89,6 +89,17 @@ body[data-view="solutions"] .solutions-showcase { margin-top: 0; }
   border-radius: 6px;
   font-size: 13px;
 }
+.product-button > span {
+  display: inline-block;
+  margin-inline-start: 4px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .product-button > span { animation: download-arrow-float 1.6s ease-in-out infinite; }
+}
+@keyframes download-arrow-float {
+  0%, 100% { transform: translateY(-2px); }
+  50% { transform: translateY(3px); }
+}
 .product-preview { min-width: 0; margin: 0; }
 .product-preview img, .working-preview {
   display: block;
