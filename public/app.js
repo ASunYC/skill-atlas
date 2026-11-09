@@ -76,41 +76,22 @@ document.addEventListener('keydown',e=>{if(e.key==='/'&&!['INPUT','TEXTAREA'].in
 function initCarousel() {
  const carousel=$('#hero-carousel');
  const slides=[...carousel.querySelectorAll('[data-slide]')];
- const selectors=[...carousel.querySelectorAll('[data-slide-index]')];
- const rotation=carousel.querySelector('[data-rotation]');
- const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
- let current=0, timer, playing=!reducedMotion.matches;
+ let current=0, timer;
  function schedule() {
   clearTimeout(timer);
-  if(playing&&!document.hidden&&document.body.dataset.view==='home'&&!carousel.matches(':hover, :focus-within')) {
-   timer=setTimeout(()=>show(current+1),6000);
+  if(!document.hidden&&document.body.dataset.view==='home'&&!carousel.matches(':hover, :focus-within')) {
+   timer=setTimeout(()=>{
+    slides[current].hidden=true;
+    current=(current+1)%slides.length;
+    slides[current].hidden=false;
+    schedule();
+   },6000);
   }
  }
- function show(index) {
-  current=(index+slides.length)%slides.length;
-  slides.forEach((slide,i)=>slide.hidden=i!==current);
-  selectors.forEach((button,i)=>{
-   if(i===current)button.setAttribute('aria-current','true');
-   else button.removeAttribute('aria-current');
-  });
-  schedule();
- }
- function setPlaying(value) {
-  playing=value;
-  rotation.textContent=playing?'Ⅱ':'▶';
-  rotation.setAttribute('aria-label',playing?'暂停轮播':'播放轮播');
-  schedule();
- }
- rotation.addEventListener('click',()=>setPlaying(!playing));
- carousel.querySelectorAll('[data-step]').forEach(button=>button.addEventListener('click',()=>show(current+Number(button.dataset.step))));
- selectors.forEach(button=>button.addEventListener('click',()=>show(Number(button.dataset.slideIndex))));
  for(const event of ['pointerenter','pointerleave','focusin','focusout']) {
   carousel.addEventListener(event,()=>queueMicrotask(schedule));
  }
- reducedMotion.addEventListener('change',event=>setPlaying(!event.matches));
  document.addEventListener('visibilitychange',schedule);
- carousel.querySelector('.carousel-controls').hidden=false;
- setPlaying(playing);
  return schedule;
 }
 const scheduleCarousel=initCarousel();
